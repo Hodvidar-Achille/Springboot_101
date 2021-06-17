@@ -13,10 +13,15 @@ public class HomeController {
     }
 
     @RequestMapping("/variable")
-    public String homePage(Model model) {
+    public String homePage2(Model model) {
         model.addAttribute("myvar", "Exercise SP 102 says hello");
         model.addAttribute("myvar2", "Hodvidar says hello too");
         return "variableTemplate";
+    }
+
+    @RequestMapping("/property")
+    public String homePage3() {
+         return "propertyTemplate";
     }
 
 
