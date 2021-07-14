@@ -10,15 +10,15 @@ public class TvShow {
     private long id;
 
     @NotNull
-    @Size(min=1, max=20)
+    @Size(min = 1, max = 20)
     private String name;
 
     @NotNull
-    @Size(min=3, max=10)
+    @Size(min = 3, max = 10)
     private String type;
 
     @NotNull
-    @Size(min=10, max=30)
+    @Size(min = 10, max = 30)
     private String description;
 
     public long getId() {

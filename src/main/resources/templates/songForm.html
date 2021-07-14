@@ -5,13 +5,13 @@
     <title>Song form</title>
 </head>
 <body>
-    <form action="#" th:action="@{/songform}" th:object="${song}" method="post">
-        Name: <input type="text" th:field="*{name}" /><br/>
-        Artist: <input type="text" th:field="*{artist}" /><br/>
-        Album: <input type="text" th:field="*{album}" /><br/>
-        Rating: <input type="number" th:field="*{rating}" /><br/>
-        Year: <input type="number" th:field="*{year}" /><br/>
-        <input type="submit" th:field="Submit" /><br/>
-    </form>
+<form action="#" method="post" th:action="@{/songform}" th:object="${song}">
+    Name: <input th:field="*{name}" type="text"/><br/>
+    Artist: <input th:field="*{artist}" type="text"/><br/>
+    Album: <input th:field="*{album}" type="text"/><br/>
+    Rating: <input th:field="*{rating}" type="number"/><br/>
+    Year: <input th:field="*{year}" type="number"/><br/>
+    <input th:field="Submit" type="submit"/><br/>
+</form>
 </body>
 </html>

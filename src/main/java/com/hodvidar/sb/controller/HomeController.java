@@ -6,10 +6,10 @@ import com.hodvidar.sb.utils.EmailAddressChecker;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -30,7 +30,7 @@ public class HomeController {
 
     @RequestMapping("/property")
     public String homePage3() {
-         return "propertyTemplate";
+        return "propertyTemplate";
     }
 
     @RequestMapping("/loadform")
@@ -42,8 +42,8 @@ public class HomeController {
     public String loadFormPage(@RequestParam("login") final String login,
                                @RequestParam("email") final String email,
                                final Model model) {
-        if(!EmailAddressChecker.isEmailValid(email)) {
-            throw new IllegalArgumentException("Email '"+email+"' is invalid");
+        if (!EmailAddressChecker.isEmailValid(email)) {
+            throw new IllegalArgumentException("Email '" + email + "' is invalid");
         }
         model.addAttribute("loginval", login);
         model.addAttribute("emailval", email);
@@ -56,7 +56,7 @@ public class HomeController {
         return "songForm";
     }
 
-    @RequestMapping("/songform")
+    @PostMapping("/songform")
     public String loadSongForm(@ModelAttribute final Song song,
                                final Model model) {
         model.addAttribute("song", song);
@@ -69,16 +69,19 @@ public class HomeController {
         return "tvForm";
     }
 
-    @RequestMapping("/tvform")
+    @PostMapping("/tvform")
     public String loadTvForm(@Valid final TvShow tvShow,
-                             final Model model,
-                             final BindingResult result) {
+                             final BindingResult result,
+                             final RedirectAttributes redirectAttributes,
+                             final Model model) {
         model.addAttribute("tvshow", tvShow);
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
+            for(FieldError error : result.getFieldErrors()) {
+                redirectAttributes.addFlashAttribute( error.getField(), error.getDefaultMessage());
+            }
             return "tvForm";
         }
         return "tvShowConfirm";
     }
-
 
 }
